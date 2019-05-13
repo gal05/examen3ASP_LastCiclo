@@ -1,0 +1,58 @@
+﻿@model examen3Ventas2019.Models.Bonificacion2
+@{
+    ViewBag.Title = "Resultado2";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="form-horizontal">
+        <h4>RESULTADO</h4>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImporteTotalMes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ImporteTotalMes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ImporteTotalMes, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NdeHijos, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NdeHijos, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NdeHijos, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <h4>-------------------resultados.-------------------------</h4>
+        <div class="form-group">
+            <div class="col-md-10">
+                <h4>Bonificacion : @Model.bonificacion()</h4>
+            </div>
+            <div class="col-md-10">
+                <h4>Comision : @Model.comision()</h4>
+            </div>
+            <div class="col-md-10">
+                <h4>Sueldo Bruto : @Model.SueldoBruto()</h4>
+            </div>
+            <div class="col-md-10">
+                <h4>Descuento: @Model.descuento()</h4>
+            </div>
+            <div class="col-md-10">
+                <h4>Sueldo Neto : @Model.sueldoNeto()</h4>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+

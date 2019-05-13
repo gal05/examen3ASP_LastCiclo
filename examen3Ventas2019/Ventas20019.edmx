@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VENTAS2019Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BOLETA">
+          <Key>
+            <PropertyRef Name="COD_BOL" />
+          </Key>
+          <Property Name="COD_BOL" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="FECHA_BOL" Type="smalldatetime" Nullable="false" />
+          <Property Name="COD_CLI" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="ESTADO_BOL" Type="char" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="COD_CLI" />
+          </Key>
+          <Property Name="COD_CLI" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="NOMBRES" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="APE_PATER_CLI" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="APE_MATER_CLI" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DIRECCION_CLI" Type="varchar" MaxLength="50" />
+          <Property Name="TELEFONO_CLI" Type="char" MaxLength="7" />
+          <Property Name="COD_DIST" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="CORREO_E" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DETALLEBOLETA">
+          <Key>
+            <PropertyRef Name="COD_BOL" />
+            <PropertyRef Name="COD_PRO" />
+          </Key>
+          <Property Name="COD_BOL" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="COD_PRO" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="CANTIDAD" Type="int" Nullable="false" />
+          <Property Name="PRECIOVENTA" Type="money" />
+        </EntityType>
+        <EntityType Name="DISTRITO">
+          <Key>
+            <PropertyRef Name="COD_DIST" />
+          </Key>
+          <Property Name="COD_DIST" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="DESCRIP_DIST" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PRODUCTO">
+          <Key>
+            <PropertyRef Name="COD_PRO" />
+          </Key>
+          <Property Name="COD_PRO" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="DESCRIP_PRO" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="PRECIO_PRO" Type="money" Nullable="false" />
+          <Property Name="STOCK_ACT_PRO" Type="int" Nullable="false" />
+          <Property Name="STOCK_MIN_PRO" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__BOLETA__COD_CLI__3E52440B">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="BOLETA" Type="Self.BOLETA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="COD_CLI" />
+            </Principal>
+            <Dependent Role="BOLETA">
+              <PropertyRef Name="COD_CLI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CLIENTE__COD_DIS__3B75D760">
+          <End Role="DISTRITO" Type="Self.DISTRITO" Multiplicity="1" />
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISTRITO">
+              <PropertyRef Name="COD_DIST" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="COD_DIST" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DETALLEBO__COD_B__412EB0B6">
+          <End Role="BOLETA" Type="Self.BOLETA" Multiplicity="1" />
+          <End Role="DETALLEBOLETA" Type="Self.DETALLEBOLETA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOLETA">
+              <PropertyRef Name="COD_BOL" />
+            </Principal>
+            <Dependent Role="DETALLEBOLETA">
+              <PropertyRef Name="COD_BOL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DETALLEBO__COD_P__4222D4EF">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+          <End Role="DETALLEBOLETA" Type="Self.DETALLEBOLETA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="COD_PRO" />
+            </Principal>
+            <Dependent Role="DETALLEBOLETA">
+              <PropertyRef Name="COD_PRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VENTAS2019ModelStoreContainer">
+          <EntitySet Name="BOLETA" EntityType="Self.BOLETA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DETALLEBOLETA" EntityType="Self.DETALLEBOLETA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DISTRITO" EntityType="Self.DISTRITO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BOLETA__COD_CLI__3E52440B" Association="Self.FK__BOLETA__COD_CLI__3E52440B">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="BOLETA" EntitySet="BOLETA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CLIENTE__COD_DIS__3B75D760" Association="Self.FK__CLIENTE__COD_DIS__3B75D760">
+            <End Role="DISTRITO" EntitySet="DISTRITO" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DETALLEBO__COD_B__412EB0B6" Association="Self.FK__DETALLEBO__COD_B__412EB0B6">
+            <End Role="BOLETA" EntitySet="BOLETA" />
+            <End Role="DETALLEBOLETA" EntitySet="DETALLEBOLETA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DETALLEBO__COD_P__4222D4EF" Association="Self.FK__DETALLEBO__COD_P__4222D4EF">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="DETALLEBOLETA" EntitySet="DETALLEBOLETA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VENTAS2019Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BOLETA">
+          <Key>
+            <PropertyRef Name="COD_BOL" />
+          </Key>
+          <Property Name="COD_BOL" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="FECHA_BOL" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="COD_CLI" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ESTADO_BOL" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="CLIENTE" Relationship="Self.FK__BOLETA__COD_CLI__3E52440B" FromRole="BOLETA" ToRole="CLIENTE" />
+          <NavigationProperty Name="DETALLEBOLETA" Relationship="Self.FK__DETALLEBO__COD_B__412EB0B6" FromRole="BOLETA" ToRole="DETALLEBOLETA" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="COD_CLI" />
+          </Key>
+          <Property Name="COD_CLI" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="NOMBRES" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APE_PATER_CLI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="APE_MATER_CLI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DIRECCION_CLI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONO_CLI" Type="String" MaxLength="7" FixedLength="true" Unicode="false" />
+          <Property Name="COD_DIST" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CORREO_E" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BOLETA" Relationship="Self.FK__BOLETA__COD_CLI__3E52440B" FromRole="CLIENTE" ToRole="BOLETA" />
+          <NavigationProperty Name="DISTRITO" Relationship="Self.FK__CLIENTE__COD_DIS__3B75D760" FromRole="CLIENTE" ToRole="DISTRITO" />
+        </EntityType>
+        <EntityType Name="DETALLEBOLETA">
+          <Key>
+            <PropertyRef Name="COD_BOL" />
+            <PropertyRef Name="COD_PRO" />
+          </Key>
+          <Property Name="COD_BOL" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="COD_PRO" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CANTIDAD" Type="Int32" Nullable="false" />
+          <Property Name="PRECIOVENTA" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="BOLETA" Relationship="Self.FK__DETALLEBO__COD_B__412EB0B6" FromRole="DETALLEBOLETA" ToRole="BOLETA" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__DETALLEBO__COD_P__4222D4EF" FromRole="DETALLEBOLETA" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="DISTRITO">
+          <Key>
+            <PropertyRef Name="COD_DIST" />
+          </Key>
+          <Property Name="COD_DIST" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DESCRIP_DIST" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CLIENTE" Relationship="Self.FK__CLIENTE__COD_DIS__3B75D760" FromRole="DISTRITO" ToRole="CLIENTE" />
+        </EntityType>
+        <EntityType Name="PRODUCTO">
+          <Key>
+            <PropertyRef Name="COD_PRO" />
+          </Key>
+          <Property Name="COD_PRO" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DESCRIP_PRO" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PRECIO_PRO" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="STOCK_ACT_PRO" Type="Int32" Nullable="false" />
+          <Property Name="STOCK_MIN_PRO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DETALLEBOLETA" Relationship="Self.FK__DETALLEBO__COD_P__4222D4EF" FromRole="PRODUCTO" ToRole="DETALLEBOLETA" />
+        </EntityType>
+        <Association Name="FK__BOLETA__COD_CLI__3E52440B">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="BOLETA" Type="Self.BOLETA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="COD_CLI" />
+            </Principal>
+            <Dependent Role="BOLETA">
+              <PropertyRef Name="COD_CLI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DETALLEBO__COD_B__412EB0B6">
+          <End Role="BOLETA" Type="Self.BOLETA" Multiplicity="1" />
+          <End Role="DETALLEBOLETA" Type="Self.DETALLEBOLETA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BOLETA">
+              <PropertyRef Name="COD_BOL" />
+            </Principal>
+            <Dependent Role="DETALLEBOLETA">
+              <PropertyRef Name="COD_BOL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CLIENTE__COD_DIS__3B75D760">
+          <End Role="DISTRITO" Type="Self.DISTRITO" Multiplicity="1" />
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISTRITO">
+              <PropertyRef Name="COD_DIST" />
+            </Principal>
+            <Dependent Role="CLIENTE">
+              <PropertyRef Name="COD_DIST" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DETALLEBO__COD_P__4222D4EF">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+          <End Role="DETALLEBOLETA" Type="Self.DETALLEBOLETA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="COD_PRO" />
+            </Principal>
+            <Dependent Role="DETALLEBOLETA">
+              <PropertyRef Name="COD_PRO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VENTAS2019Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BOLETA" EntityType="Self.BOLETA" />
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" />
+          <EntitySet Name="DETALLEBOLETA" EntityType="Self.DETALLEBOLETA" />
+          <EntitySet Name="DISTRITO" EntityType="Self.DISTRITO" />
+          <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
+          <AssociationSet Name="FK__BOLETA__COD_CLI__3E52440B" Association="Self.FK__BOLETA__COD_CLI__3E52440B">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="BOLETA" EntitySet="BOLETA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DETALLEBO__COD_B__412EB0B6" Association="Self.FK__DETALLEBO__COD_B__412EB0B6">
+            <End Role="BOLETA" EntitySet="BOLETA" />
+            <End Role="DETALLEBOLETA" EntitySet="DETALLEBOLETA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CLIENTE__COD_DIS__3B75D760" Association="Self.FK__CLIENTE__COD_DIS__3B75D760">
+            <End Role="DISTRITO" EntitySet="DISTRITO" />
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DETALLEBO__COD_P__4222D4EF" Association="Self.FK__DETALLEBO__COD_P__4222D4EF">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="DETALLEBOLETA" EntitySet="DETALLEBOLETA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VENTAS2019ModelStoreContainer" CdmEntityContainer="VENTAS2019Entities">
+          <EntitySetMapping Name="BOLETA">
+            <EntityTypeMapping TypeName="VENTAS2019Model.BOLETA">
+              <MappingFragment StoreEntitySet="BOLETA">
+                <ScalarProperty Name="COD_BOL" ColumnName="COD_BOL" />
+                <ScalarProperty Name="FECHA_BOL" ColumnName="FECHA_BOL" />
+                <ScalarProperty Name="COD_CLI" ColumnName="COD_CLI" />
+                <ScalarProperty Name="ESTADO_BOL" ColumnName="ESTADO_BOL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTE">
+            <EntityTypeMapping TypeName="VENTAS2019Model.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="COD_CLI" ColumnName="COD_CLI" />
+                <ScalarProperty Name="NOMBRES" ColumnName="NOMBRES" />
+                <ScalarProperty Name="APE_PATER_CLI" ColumnName="APE_PATER_CLI" />
+                <ScalarProperty Name="APE_MATER_CLI" ColumnName="APE_MATER_CLI" />
+                <ScalarProperty Name="DIRECCION_CLI" ColumnName="DIRECCION_CLI" />
+                <ScalarProperty Name="TELEFONO_CLI" ColumnName="TELEFONO_CLI" />
+                <ScalarProperty Name="COD_DIST" ColumnName="COD_DIST" />
+                <ScalarProperty Name="CORREO_E" ColumnName="CORREO_E" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLEBOLETA">
+            <EntityTypeMapping TypeName="VENTAS2019Model.DETALLEBOLETA">
+              <MappingFragment StoreEntitySet="DETALLEBOLETA">
+                <ScalarProperty Name="COD_BOL" ColumnName="COD_BOL" />
+                <ScalarProperty Name="COD_PRO" ColumnName="COD_PRO" />
+                <ScalarProperty Name="CANTIDAD" ColumnName="CANTIDAD" />
+                <ScalarProperty Name="PRECIOVENTA" ColumnName="PRECIOVENTA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DISTRITO">
+            <EntityTypeMapping TypeName="VENTAS2019Model.DISTRITO">
+              <MappingFragment StoreEntitySet="DISTRITO">
+                <ScalarProperty Name="COD_DIST" ColumnName="COD_DIST" />
+                <ScalarProperty Name="DESCRIP_DIST" ColumnName="DESCRIP_DIST" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTO">
+            <EntityTypeMapping TypeName="VENTAS2019Model.PRODUCTO">
+              <MappingFragment StoreEntitySet="PRODUCTO">
+                <ScalarProperty Name="COD_PRO" ColumnName="COD_PRO" />
+                <ScalarProperty Name="DESCRIP_PRO" ColumnName="DESCRIP_PRO" />
+                <ScalarProperty Name="PRECIO_PRO" ColumnName="PRECIO_PRO" />
+                <ScalarProperty Name="STOCK_ACT_PRO" ColumnName="STOCK_ACT_PRO" />
+                <ScalarProperty Name="STOCK_MIN_PRO" ColumnName="STOCK_MIN_PRO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

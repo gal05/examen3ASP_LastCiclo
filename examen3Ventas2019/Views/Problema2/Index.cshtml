@@ -1,0 +1,39 @@
+﻿@model examen3Ventas2019.Models.Bonificacion2
+@{
+    ViewBag.Title = "Problema 2";
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="form-horizontal">
+        <h4>PROBLEMA 2</h4>
+        <hr />
+
+        <form action="/Problema2/Resultado2" method="post">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ImporteTotalMes, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" name="txtimporte" value="" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NdeHijos, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" name="txtnhijos" value="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Calcular" class="btn btn-default" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>
+

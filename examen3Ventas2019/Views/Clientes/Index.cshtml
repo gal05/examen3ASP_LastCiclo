@@ -1,0 +1,69 @@
+﻿@model IEnumerable<examen3Ventas2019.CLIENTE>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>CLIENTES</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo Cliente", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NOMBRES)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.APE_PATER_CLI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.APE_MATER_CLI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DIRECCION_CLI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TELEFONO_CLI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CORREO_E)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DISTRITO.DESCRIP_DIST)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NOMBRES)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.APE_PATER_CLI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.APE_MATER_CLI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DIRECCION_CLI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TELEFONO_CLI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CORREO_E)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DISTRITO.DESCRIP_DIST)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.COD_CLI }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.COD_CLI }) |
+            @Html.ActionLink("Borrar", "Delete", new { id=item.COD_CLI })
+        </td>
+    </tr>
+}
+
+</table>
